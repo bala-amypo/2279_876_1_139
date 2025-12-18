@@ -1,13 +1,15 @@
-package com.example.demo.entity;
-
-import jakarta.persistence.*;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(
-    name = "universities",
-    uniqueConstraints = @UniqueConstraint(columnNames = "name")
-)
+@Table(name = "universities", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "name")
+})
 public class University {
 
     @Id
@@ -18,27 +20,21 @@ public class University {
     private String name;
 
     private String accreditationLevel;
-
     private String country;
 
     @Column(nullable = false)
-    private Boolean active = true; // default
+    private Boolean active = true;
 
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // ✅ Default constructor (JPA requirement)
+    public University() {}
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getAccreditationLevel() { return accreditationLevel; }
-    public void setAccreditationLevel(String accreditationLevel) {
+    // ✅ Parameterized constructor
+    public University(String name, String accreditationLevel, String country) {
+        this.name = name;
         this.accreditationLevel = accreditationLevel;
+        this.country = country;
+        this.active = true;
     }
 
-    public String getCountry() { return country; }
-    public void setCountry(String country) { this.country = country; }
-
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+    // Getters & Setters
 }
