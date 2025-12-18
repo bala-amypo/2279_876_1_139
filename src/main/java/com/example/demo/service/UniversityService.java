@@ -4,7 +4,7 @@ import com.example.demo.entity.University;
 
 import java.util.List;
 
-public interface UniversityServiceImpl {
+public interface UniversityService {
 
     University createUniversity(University univ);
 
