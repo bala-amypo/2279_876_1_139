@@ -1,6 +1,6 @@
-package com.example.transferportal.service;
+package com.example.demo.service;
 
-import com.example.transferportal.entity.TransferEvaluationResult;
+import com.example.demo.entity.TransferEvaluationResult;
 
 import java.util.List;
 
