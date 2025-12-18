@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Entity
 @Table(
