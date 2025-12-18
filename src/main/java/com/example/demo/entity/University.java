@@ -25,10 +25,10 @@ public class University {
     @Column(nullable = false)
     private Boolean active = true;
 
-    // ✅ Default constructor (JPA requirement)
+    
     public University() {}
 
-    // ✅ Parameterized constructor
+    
     public University(String name, String accreditationLevel, String country) {
         this.name = name;
         this.accreditationLevel = accreditationLevel;
@@ -36,5 +36,5 @@ public class University {
         this.active = true;
     }
 
-    // Getters & Setters
+    
 }
