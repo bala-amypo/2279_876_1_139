@@ -26,7 +26,9 @@ public class University {
     private Boolean active = true;
 
     
-    public University() {}
+    public University() {
+        
+    }
 
     
     public University(String name, String accreditationLevel, String country) {
