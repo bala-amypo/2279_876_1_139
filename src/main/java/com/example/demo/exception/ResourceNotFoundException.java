@@ -1,4 +1,4 @@
-package com.example.transferportal.entity.exception;
+package com.example.demo.entity.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
