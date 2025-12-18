@@ -1,16 +1,16 @@
 package com.example.transferportal.dto;
 
-public class AuthRequest {
+public class LoginRequest {
 
     private String email;
     private String password;
 
     // Default constructor
-    public AuthRequest() {
+    public LoginRequest() {
     }
 
     // Parameterized constructor
-    public AuthRequest(String email, String password) {
+    public LoginRequest(String email, String password) {
         this.email = email;
         this.password = password;
     }
