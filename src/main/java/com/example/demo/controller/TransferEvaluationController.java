@@ -1,8 +1,8 @@
 
-package com.example.transferportal.controller;
+package com.example.demo.controller;
 
-import com.example.transferportal.entity.TransferEvaluationResult;
-import com.example.transferportal.service.TransferEvaluationService;
+import com.example.demo.entity.TransferEvaluationResult;
+import com.example.demo.service.TransferEvaluationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,8 @@
 
-package com.example.transferportal.controller;
+package com.example.demo.controller;
 
-import com.example.transferportal.entity.University;
-import com.example.transferportal.service.UniversityService;
+import com.example.demo.entity.University;
+import com.example.demo.service.UniversityService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
