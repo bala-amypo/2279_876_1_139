@@ -7,11 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.CourseContentTopic;
 import com.example.demo.service.CourseContentTopicService;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-
 @RestController
-@RequestMapping("/api/topics")
-@Tag(name = "Course Content Topics")
+@RequestMapping("/topics")
 public class CourseContentTopicController {
 
     private final CourseContentTopicService service;
@@ -26,7 +23,8 @@ public class CourseContentTopicController {
     }
 
     @PutMapping("/{id}")
-    public CourseContentTopic update(@PathVariable Long id, @RequestBody CourseContentTopic topic) {
+    public CourseContentTopic update(@PathVariable Long id,
+                                     @RequestBody CourseContentTopic topic) {
         return service.updateTopic(id, topic);
     }
 
@@ -39,5 +37,9 @@ public class CourseContentTopicController {
     public List<CourseContentTopic> getByCourse(@PathVariable Long courseId) {
         return service.getTopicsForCourse(courseId);
     }
-}
 
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable Long id) {
+        return service.delete(id);
+    }
+}
