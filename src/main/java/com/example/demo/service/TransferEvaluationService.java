@@ -1,11 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.TransferEvaluationResult;
-import java.util.List;
+import com.example.demo.entity.TransferEvaluation;
 
 public interface TransferEvaluationService {
+    
+    String evaluateTransfer(Long studentId, Long courseId);  // must match controller call
 
-    TransferEvaluationResult saveEvaluation(TransferEvaluationResult result);
-
-    List<TransferEvaluationResult> getEvaluationsForCourse(Long courseId);
+    TransferEvaluation getEvaluationById(Long evaluationId); // must match controller call
 }
