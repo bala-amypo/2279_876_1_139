@@ -1,11 +1,10 @@
-// Package: com.example.transferportal.service.impl
 
-package com.example.transferportal.service.impl;
+package com.example.demo.service.impl;
 
-import com.example.transferportal.entity.*;
-import com.example.transferportal.entity.exception.ResourceNotFoundException;
-import com.example.transferportal.repository.*;
-import com.example.transferportal.service.*;
+import com.example.demo.entity.*;
+import com.example.demo.entity.exception.ResourceNotFoundException;
+import com.example.demo.repository.*;
+import com.example.demo.service.*;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
