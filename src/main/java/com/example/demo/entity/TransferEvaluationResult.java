@@ -1,32 +1,19 @@
 package com.example.demo.entity;
 
-public class TransferEvaluation {
-
+public class TransferEvaluationResult {
     private Long id;
-    private String status;
+    private String result;
 
-    public TransferEvaluation() {
-    }
+    public TransferEvaluationResult() {}
 
-    public TransferEvaluation(Long id, String status) {
+    public TransferEvaluationResult(Long id, String result) {
         this.id = id;
-        this.status = status;
+        this.result = result;
     }
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public String getResult() { return result; }
+    public void setResult(String result) { this.result = result; }
 }
