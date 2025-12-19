@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.example.demo.entity.CourseContentTopicService;
 
-public interface CourseContentService {
+public interface CourseContentTopicService {
 
     CourseContentTopic createTopic(CourseContentTopic topic);
 
