@@ -5,13 +5,13 @@ import com.example.demo.entity.CourseContentTopic;
 
 public interface CourseContentTopicService {
 
-    CourseContentTopic create(CourseContentTopic topic);
+    CourseContentTopic createTopic(CourseContentTopic topic);
 
-    CourseContentTopic getById(Long id);
+    CourseContentTopic updateTopic(Long id, CourseContentTopic topic);
 
-    List<CourseContentTopic> getAll();
+    CourseContentTopic getTopicById(Long id);
 
-    CourseContentTopic update(Long id, CourseContentTopic topic);
+    List<CourseContentTopic> getTopicsForCourse(Long courseId);
 
     String delete(Long id);
 }
