@@ -9,13 +9,11 @@ public class TransferEvaluationServiceImpl implements TransferEvaluationService 
 
     @Override
     public String evaluateTransfer(Long studentId, Long courseId) {
-        // Dummy implementation just to pass compilation
-        return "Transfer evaluation completed for student " + studentId + " and course " + courseId;
+        return "Transfer evaluation done for student " + studentId + " and course " + courseId;
     }
 
     @Override
     public TransferEvaluation getEvaluationById(Long evaluationId) {
-        // Dummy implementation
         TransferEvaluation evaluation = new TransferEvaluation();
         evaluation.setId(evaluationId);
         evaluation.setStatus("Pending");

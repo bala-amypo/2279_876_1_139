@@ -1,24 +1,19 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import java.sql.Timestamp;
+public class TransferEvaluation {
 
-@Entity
-public class TransferEvaluationResult {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String status;
 
-    private boolean eligibleForTransfer;
-
-    private String remarks;
-
-    private Timestamp evaluatedAt;
-
-    public TransferEvaluationResult() {
+    public TransferEvaluation() {
     }
 
+    public TransferEvaluation(Long id, String status) {
+        this.id = id;
+        this.status = status;
+    }
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -27,33 +22,11 @@ public class TransferEvaluationResult {
         this.id = id;
     }
 
-    public boolean isEligibleForTransfer() {
-        return eligibleForTransfer;
+    public String getStatus() {
+        return status;
     }
 
-    public void setEligibleForTransfer(boolean eligibleForTransfer) {
-        this.eligibleForTransfer = eligibleForTransfer;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    // ✔ Needed by service
-    public Timestamp getEvaluatedAt() {
-        return evaluatedAt;
-    }
-
-    public void setEvaluatedAt(Timestamp evaluatedAt) {
-        this.evaluatedAt = evaluatedAt;
-    }
-
-    // ✔ Alias for earlier error (safe)
-    public void setNotes(String notes) {
-        this.remarks = notes;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
