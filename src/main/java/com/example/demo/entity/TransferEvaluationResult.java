@@ -1,34 +1,24 @@
-
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
-@Table(name = "transfer_evaluation_results")
 public class TransferEvaluationResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "source_course_id", nullable = false)
-    private Course sourceCourse;
+    private Double totalTransferableCredits;
 
-    @ManyToOne
-    @JoinColumn(name = "target_course_id", nullable = false)
-    private Course targetCourse;
+    private String status;
 
-    private Double overlapPercentage;
+    private String remarks;
 
-    private Integer creditHourDifference;
+    private Timestamp evaluatedAt;
 
-    private Boolean isEligibleForTransfer;
-
-    private LocalDateTime evaluatedAt = LocalDateTime.now();
-
-    private String notes;
+    private boolean eligibleForTransfer;
 
     public TransferEvaluationResult() {
     }
@@ -41,55 +31,43 @@ public class TransferEvaluationResult {
         this.id = id;
     }
 
-    public Course getSourceCourse() {
-        return sourceCourse;
+    public Double getTotalTransferableCredits() {
+        return totalTransferableCredits;
     }
 
-    public void setSourceCourse(Course sourceCourse) {
-        this.sourceCourse = sourceCourse;
+    public void setTotalTransferableCredits(Double totalTransferableCredits) {
+        this.totalTransferableCredits = totalTransferableCredits;
     }
 
-    public Course getTargetCourse() {
-        return targetCourse;
+    public String getStatus() {
+        return status;
     }
 
-    public void setTargetCourse(Course targetCourse) {
-        this.targetCourse = targetCourse;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public Double getOverlapPercentage() {
-        return overlapPercentage;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setOverlapPercentage(Double overlapPercentage) {
-        this.overlapPercentage = overlapPercentage;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
-    public Integer getCreditHourDifference() {
-        return creditHourDifference;
-    }
-
-    public void setCreditHourDifference(Integer creditHourDifference) {
-        this.creditHourDifference = creditHourDifference;
-    }
-
-    public Boolean getIsEligibleForTransfer() {
-        return isEligibleForTransfer;
-    }
-
-    public void setIsEligibleForTransfer(Boolean eligibleForTransfer) {
-        isEligibleForTransfer = eligibleForTransfer;
-    }
-
-    public LocalDateTime getEvaluatedAt() {
+    public Timestamp getEvaluatedAt() {
         return evaluatedAt;
     }
 
-    public String getNotes() {
-        return notes;
+    public void setEvaluatedAt(Timestamp evaluatedAt) {
+        this.evaluatedAt = evaluatedAt;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public boolean isEligibleForTransfer() {
+        return eligibleForTransfer;
+    }
+
+    public void setEligibleForTransfer(boolean eligibleForTransfer) {
+        this.eligibleForTransfer = eligibleForTransfer;
     }
 }
