@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 public class TransferEvaluationResult {
@@ -12,6 +13,8 @@ public class TransferEvaluationResult {
     private boolean eligibleForTransfer;
 
     private String remarks;
+
+    private Timestamp evaluatedAt;
 
     public TransferEvaluationResult() {
     }
@@ -40,7 +43,16 @@ public class TransferEvaluationResult {
         this.remarks = remarks;
     }
 
-    // 🔹 Alias method to fix compilation error
+    // ✔ Needed by service
+    public Timestamp getEvaluatedAt() {
+        return evaluatedAt;
+    }
+
+    public void setEvaluatedAt(Timestamp evaluatedAt) {
+        this.evaluatedAt = evaluatedAt;
+    }
+
+    // ✔ Alias for earlier error (safe)
     public void setNotes(String notes) {
         this.remarks = notes;
     }
