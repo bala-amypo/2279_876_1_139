@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 public class TransferEvaluationResult {
@@ -10,15 +9,9 @@ public class TransferEvaluationResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double totalTransferableCredits;
-
-    private String status;
+    private boolean eligibleForTransfer;
 
     private String remarks;
-
-    private Timestamp evaluatedAt;
-
-    private boolean eligibleForTransfer;
 
     public TransferEvaluationResult() {
     }
@@ -31,20 +24,12 @@ public class TransferEvaluationResult {
         this.id = id;
     }
 
-    public Double getTotalTransferableCredits() {
-        return totalTransferableCredits;
+    public boolean isEligibleForTransfer() {
+        return eligibleForTransfer;
     }
 
-    public void setTotalTransferableCredits(Double totalTransferableCredits) {
-        this.totalTransferableCredits = totalTransferableCredits;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setEligibleForTransfer(boolean eligibleForTransfer) {
+        this.eligibleForTransfer = eligibleForTransfer;
     }
 
     public String getRemarks() {
@@ -55,19 +40,8 @@ public class TransferEvaluationResult {
         this.remarks = remarks;
     }
 
-    public Timestamp getEvaluatedAt() {
-        return evaluatedAt;
-    }
-
-    public void setEvaluatedAt(Timestamp evaluatedAt) {
-        this.evaluatedAt = evaluatedAt;
-    }
-
-    public boolean isEligibleForTransfer() {
-        return eligibleForTransfer;
-    }
-
-    public void setEligibleForTransfer(boolean eligibleForTransfer) {
-        this.eligibleForTransfer = eligibleForTransfer;
+    // 🔹 Alias method to fix compilation error
+    public void setNotes(String notes) {
+        this.remarks = notes;
     }
 }
