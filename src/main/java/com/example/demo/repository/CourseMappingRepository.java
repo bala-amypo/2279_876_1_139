@@ -11,3 +11,4 @@ public interface CourseMappingRepository extends JpaRepository<CourseMapping, Lo
 
     boolean existsBySourceCourseIdAndTargetCourseId(Long sourceCourseId, Long targetCourseId);
 }
+
