@@ -3,26 +3,17 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "universities")
+@Table(name = "universities", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class University {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     private boolean active = true;
-
-    // ✅ Default constructor (MANDATORY for tests)
-    public University() {
-    }
-
-    // ✅ Parameterized constructor
-    public University(String name) {
-        this.name = name;
-        this.active = true;
-    }
 
     // getters & setters
     public Long getId() { return id; }
