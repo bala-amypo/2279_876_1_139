@@ -10,35 +10,35 @@ import java.util.List;
 @RequestMapping("/courses")
 public class CourseController {
 
-    private final CourseService courseService;
+    private final CourseService service;
 
-    public CourseController(CourseService courseService) {
-        this.courseService = courseService;
+    public CourseController(CourseService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public Course createCourse(@RequestBody Course course) {
-        return courseService.createCourse(course);
+    public Course create(@RequestBody Course course) {
+        return service.createCourse(course);
     }
 
     @PutMapping("/{id}")
-    public Course updateCourse(@PathVariable Long id,
-                               @RequestBody Course course) {
-        return courseService.updateCourse(id, course);
+    public Course update(@PathVariable Long id, @RequestBody Course course) {
+        return service.updateCourse(id, course);
     }
 
     @GetMapping("/{id}")
-    public Course getCourse(@PathVariable Long id) {
-        return courseService.getCourseById(id);
+    public Course getById(@PathVariable Long id) {
+        return service.getCourseById(id);
     }
 
     @GetMapping("/university/{universityId}")
-    public List<Course> getCoursesByUniversity(@PathVariable Long universityId) {
-        return courseService.getCoursesByUniversity(universityId);
+    public List<Course> getByUniversity(@PathVariable Long universityId) {
+        return service.getCoursesByUniversity(universityId);
     }
 
     @DeleteMapping("/{id}")
-    public void deactivateCourse(@PathVariable Long id) {
-        courseService.deactivateCourse(id);
+    public String deactivate(@PathVariable Long id) {
+        service.deactivateCourse(id);
+        return "Course deactivated";
     }
 }

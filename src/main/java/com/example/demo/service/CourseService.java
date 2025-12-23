@@ -12,7 +12,7 @@ public interface CourseService {
 
     Course getCourseById(Long id);
 
-    List<Course> getCoursesByUniversity(Long universityId);
-
     void deactivateCourse(Long id);
+
+    List<Course> getCoursesByUniversity(Long universityId);
 }

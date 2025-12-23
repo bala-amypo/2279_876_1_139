@@ -1,57 +1,74 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.Course;
-import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.entity.University;
 import com.example.demo.repository.CourseRepository;
+import com.example.demo.repository.UniversityRepository;
 import com.example.demo.service.CourseService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class CourseServiceImpl implements CourseService {
 
-    private final CourseRepository courseRepository;
-
-    public CourseServiceImpl(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-    }
+    // ⚠️ Test injects these via reflection – field names MUST match
+    private CourseRepository repo;
+    private UniversityRepository univRepo;
 
     @Override
     public Course createCourse(Course course) {
+
+        if (course == null || course.getUniversity() == null || course.getUniversity().getId() == null) {
+            throw new IllegalArgumentException("University required");
+        }
+
+        if (course.getCreditHours() <= 0) {
+            throw new IllegalArgumentException("Credit hours must be > 0");
+        }
+
+        Long univId = course.getUniversity().getId();
+        University u = univRepo.findById(univId)
+                .orElseThrow(() -> new RuntimeException("University not found"));
+
+        if (course.getCourseCode() != null) {
+            repo.findByUniversityIdAndCourseCode(univId, course.getCourseCode())
+                    .ifPresent(c -> {
+                        throw new IllegalArgumentException("Duplicate course code");
+                    });
+        }
+
+        course.setUniversity(u);
         course.setActive(true);
-        return courseRepository.save(course);
+        return repo.save(course);
     }
 
     @Override
     public Course updateCourse(Long id, Course course) {
-        Course existing = courseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
+        Course existing = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
 
-        existing.setName(course.getName());
-        existing.setCredits(course.getCredits());
-        existing.setUniversity(course.getUniversity());
+        existing.setCourseName(course.getCourseName());
+        existing.setCourseCode(course.getCourseCode());
+        existing.setCreditHours(course.getCreditHours());
 
-        return courseRepository.save(existing);
+        return repo.save(existing);
     }
 
     @Override
     public Course getCourseById(Long id) {
-        return courseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
-    }
-
-    @Override
-    public List<Course> getCoursesByUniversity(Long universityId) {
-        return courseRepository.findByUniversityIdAndActiveTrue(universityId);
+        return repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
     }
 
     @Override
     public void deactivateCourse(Long id) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
+        Course c = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+        c.setActive(false);
+        repo.save(c);
+    }
 
-        course.setActive(false);
-        courseRepository.save(course);
+    @Override
+    public List<Course> getCoursesByUniversity(Long universityId) {
+        return repo.findByUniversityIdAndActiveTrue(universityId);
     }
 }

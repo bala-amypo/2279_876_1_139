@@ -13,22 +13,32 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private University university;
-
     private String courseCode;
     private String courseName;
-    private Integer creditHours;
-    private String description;
-    private String department;
+    private int creditHours;
 
-    private Boolean active = true;
+    private boolean active = true;
 
+    @ManyToOne
+    @JoinColumn(name = "university_id")
+    private University university;
+
+    // ✅ Default constructor
+    public Course() {
+    }
+
+    // ✅ Parameterized constructor
+    public Course(String courseCode, String courseName, int creditHours, University university) {
+        this.courseCode = courseCode;
+        this.courseName = courseName;
+        this.creditHours = creditHours;
+        this.university = university;
+        this.active = true;
+    }
+
+    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
-    public University getUniversity() { return university; }
-    public void setUniversity(University university) { this.university = university; }
 
     public String getCourseCode() { return courseCode; }
     public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
@@ -36,15 +46,12 @@ public class Course {
     public String getCourseName() { return courseName; }
     public void setCourseName(String courseName) { this.courseName = courseName; }
 
-    public Integer getCreditHours() { return creditHours; }
-    public void setCreditHours(Integer creditHours) { this.creditHours = creditHours; }
+    public int getCreditHours() { return creditHours; }
+    public void setCreditHours(int creditHours) { this.creditHours = creditHours; }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 
-    public String getDepartment() { return department; }
-    public void setDepartment(String department) { this.department = department; }
-
-    public Boolean isActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+    public University getUniversity() { return university; }
+    public void setUniversity(University university) { this.university = university; }
 }
