@@ -3,40 +3,45 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "courses", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "code")
-})
+@Table(name = "courses")
 public class Course {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, unique = true)
-    private String code;
-
-    private String title;
-
+    
     @Column(nullable = false)
-    private Double credits;
+    private String courseCode;
+    
+    @Column(nullable = false)
+    private String courseName;
+    
+    @Column(nullable = false)
+    private int creditHours;
+    
+    @Column(nullable = false)
+    private boolean active = true;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id", nullable = false)
+    private University university;
 
     public Course() {}
 
-    public Course(String code, String title, Double credits) {
-        this.code = code;
-        this.title = title;
-        this.credits = credits;
-    }
-
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
-    public String getCode() { return code; }
-    public void setCode(String code) { this.code = code; }
-
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-
-    public Double getCredits() { return credits; }
-    public void setCredits(Double credits) { this.credits = credits; }
+    
+    public String getCourseCode() { return courseCode; }
+    public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
+    
+    public String getCourseName() { return courseName; }
+    public void setCourseName(String courseName) { this.courseName = courseName; }
+    
+    public int getCreditHours() { return creditHours; }
+    public void setCreditHours(int creditHours) { this.creditHours = creditHours; }
+    
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
+    
+    public University getUniversity() { return university; }
+    public void setUniversity(University university) { this.university = university; }
 }
