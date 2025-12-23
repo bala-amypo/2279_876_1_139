@@ -7,6 +7,7 @@ import com.example.demo.repository.UniversityRepository;
 import com.example.demo.service.CourseService;
 
 import java.util.List;
+@Service
 
 public class CourseServiceImpl implements CourseService {
 
@@ -72,3 +73,4 @@ public class CourseServiceImpl implements CourseService {
         return repo.findByUniversityIdAndActiveTrue(universityId);
     }
 }
+
