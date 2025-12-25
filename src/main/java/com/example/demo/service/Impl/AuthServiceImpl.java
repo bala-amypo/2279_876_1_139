@@ -40,24 +40,23 @@
 
 
 
-package com.example.demo.service.impl;
-
-import com.example.demo.dto.AuthRequest;
-import com.example.demo.dto.AuthResponse;
-import com.example.demo.dto.RegisterRequest;
-import com.example.demo.dto.RegisterResponse;
-import com.example.demo.service.AuthService;
-import org.springframework.stereotype.Service;
-
 @Service
 public class AuthServiceImpl implements AuthService {
+
+    private final JwtUtil jwtUtil;
+
+    public AuthServiceImpl(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
     public AuthResponse login(AuthRequest request) {
 
-        // TEMP IMPLEMENTATION (testing purpose)
+        // later: DB validation, password check
+        String token = jwtUtil.generateToken(request.getEmail());
+
         AuthResponse response = new AuthResponse();
-        response.setToken("dummy-jwt-token");
+        response.setToken(token);
         response.setEmail(request.getEmail());
         response.setRole("USER");
 
@@ -67,7 +66,6 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public RegisterResponse register(RegisterRequest request) {
 
-        // TEMP IMPLEMENTATION (testing purpose)
         RegisterResponse response = new RegisterResponse();
         response.setMessage("User registered successfully");
         response.setEmail(request.getEmail());
