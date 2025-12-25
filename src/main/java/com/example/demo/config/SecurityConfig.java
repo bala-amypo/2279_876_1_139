@@ -37,6 +37,49 @@
 // }
 
 
+// package com.example.demo.config;
+
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Configuration;
+// import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+// import org.springframework.security.web.SecurityFilterChain;
+
+// @Configuration
+// public class SecurityConfig {
+
+//     @Bean
+//     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+//         http
+//             .csrf(csrf -> csrf.disable())
+//             .authorizeHttpRequests(auth -> auth
+
+//                 // ✅ ALLOW SWAGGER
+//                 .requestMatchers(
+//                         "/swagger-ui.html",
+//                         "/swagger-ui/**",
+//                         "/v3/api-docs/**",
+//                         "/v3/api-docs",
+//                         "/swagger-resources/**",
+//                         "/webjars/**"
+//                 ).permitAll()
+
+//                 // auth controller allowed
+//                 .requestMatchers("/auth/**").permitAll()
+
+//                 // everything else secured
+//                 .anyRequest().authenticated()
+//             );
+
+//         return http.build();
+//     }
+// }
+
+
+
+
+
+
 package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
@@ -51,23 +94,28 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+            // ❌ CSRF not needed for REST APIs
             .csrf(csrf -> csrf.disable())
+
+            // ❌ Disable default login pages
+            .formLogin(form -> form.disable())
+            .httpBasic(basic -> basic.disable())
+
             .authorizeHttpRequests(auth -> auth
 
-                // ✅ ALLOW SWAGGER
+                // ✅ AUTH APIs (login, register)
+                .requestMatchers("/auth/**").permitAll()
+
+                // ✅ SWAGGER APIs
                 .requestMatchers(
                         "/swagger-ui.html",
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
-                        "/v3/api-docs",
                         "/swagger-resources/**",
                         "/webjars/**"
                 ).permitAll()
 
-                // auth controller allowed
-                .requestMatchers("/auth/**").permitAll()
-
-                // everything else secured
+                // 🔒 Everything else needs authentication
                 .anyRequest().authenticated()
             );
 
