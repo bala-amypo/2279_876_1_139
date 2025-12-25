@@ -1,43 +1,43 @@
-package com.example.demo.config;
+// package com.example.demo.config;
 
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
-import io.swagger.v3.oas.models.servers.Server;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+// import io.swagger.v3.oas.models.OpenAPI;
+// import io.swagger.v3.oas.models.Components;
+// import io.swagger.v3.oas.models.info.Info;
+// import io.swagger.v3.oas.models.security.SecurityRequirement;
+// import io.swagger.v3.oas.models.security.SecurityScheme;
+// import io.swagger.v3.oas.models.servers.Server;
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
+// import java.util.List;
 
-@Configuration
-public class OpenApiConfig {
+// @Configuration
+// public class OpenApiConfig {
 
-    @Bean
-    public OpenAPI customOpenAPI() {
+//     @Bean
+//     public OpenAPI customOpenAPI() {
 
-        return new OpenAPI()
-                .info(new Info()
-                        .title("University Course Transfer Validator API")
-                        .version("1.0"))
-                .servers(List.of(
-                        new Server().url("https://9168.32procr.amypo.ai/")
-                ))
-                .addSecurityItem(
-                        new SecurityRequirement().addList("bearerAuth")
-                )
-                .components(
-                        new Components().addSecuritySchemes(
-                                "bearerAuth",
-                                new SecurityScheme()
-                                        .type(SecurityScheme.Type.HTTP)
-                                        .scheme("bearer")
-                                        .bearerFormat("JWT")
-                        )
-                );
-    }
-}
+//         return new OpenAPI()
+//                 .info(new Info()
+//                         .title("University Course Transfer Validator API")
+//                         .version("1.0"))
+//                 .servers(List.of(
+//                         new Server().url("https://9168.32procr.amypo.ai/")
+//                 ))
+//                 .addSecurityItem(
+//                         new SecurityRequirement().addList("bearerAuth")
+//                 )
+//                 .components(
+//                         new Components().addSecuritySchemes(
+//                                 "bearerAuth",
+//                                 new SecurityScheme()
+//                                         .type(SecurityScheme.Type.HTTP)
+//                                         .scheme("bearer")
+//                                         .bearerFormat("JWT")
+//                         )
+//                 );
+//     }
+// }
 // package com.example.demo.config;
 
 // import io.swagger.v3.oas.models.OpenAPI;
@@ -76,3 +76,44 @@ public class OpenApiConfig {
 //                 );
 //     }
 // }
+
+
+package com.example.demo.config;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
+
+@Configuration
+public class OpenApiConfig {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+
+        return new OpenAPI()
+                .info(new Info()
+                        .title("University Course Transfer Validator API")
+                        .version("1.0")
+                        .description("JWT secured API with Swagger authorization"))
+                .servers(List.of(
+                        // ✅ ONLY LOCAL SPRING BOOT URL
+                        new Server().url("http://localhost:9001")
+                ))
+                .components(new Components()
+                        .addSecuritySchemes("bearerAuth",
+                                new SecurityScheme()
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")
+                        )
+                );
+    }
+}
+
