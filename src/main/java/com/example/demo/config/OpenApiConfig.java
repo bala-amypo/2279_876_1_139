@@ -61,9 +61,9 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("University Course Transfer Validator API")
                         .version("1.0")
-                        .description("JWT secured API with Swagger authorization support"))
+                        .description("JWT secured API with Swagger authorization"))
                 .servers(List.of(
-                        new Server().url("http://localhost:8080")
+                        new Server().url("https://9168.32procr.amypo.ai/")
                 ))
                 .components(new Components()
                         .addSecuritySchemes("bearerAuth",
