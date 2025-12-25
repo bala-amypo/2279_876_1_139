@@ -94,22 +94,19 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            // REST APIs – CSRF not required
+            // ❌ CSRF not needed for REST APIs
             .csrf(csrf -> csrf.disable())
 
-            // Disable default Spring Security login mechanisms
+            // ❌ Disable default login pages
             .formLogin(form -> form.disable())
             .httpBasic(basic -> basic.disable())
 
             .authorizeHttpRequests(auth -> auth
 
-                // ✅ ROOT URL (avoid 403 on base path)
-                .requestMatchers("/").permitAll()
-
-                // ✅ AUTH APIs
+                // ✅ AUTH APIs (login, register)
                 .requestMatchers("/auth/**").permitAll()
 
-                // ✅ SWAGGER
+                // ✅ SWAGGER APIs
                 .requestMatchers(
                         "/swagger-ui.html",
                         "/swagger-ui/**",
@@ -118,7 +115,7 @@ public class SecurityConfig {
                         "/webjars/**"
                 ).permitAll()
 
-                // 🔒 Everything else secured
+                // 🔒 Everything else needs authentication
                 .anyRequest().authenticated()
             );
 
