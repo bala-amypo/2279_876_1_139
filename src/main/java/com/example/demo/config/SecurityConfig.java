@@ -86,6 +86,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 public class SecurityConfig {
@@ -94,16 +95,25 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            // ❌ CSRF not needed for REST APIs
-            .csrf(csrf -> csrf.disable())
+            // ✅ CSRF ENABLED (but ignore auth & swagger)
+            .csrf(csrf -> csrf
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .ignoringRequestMatchers(
+                        "/auth/**",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/swagger-resources/**",
+                        "/webjars/**"
+                )
+            )
 
-            // ❌ Disable default login pages
+            // Disable default login mechanisms
             .formLogin(form -> form.disable())
             .httpBasic(basic -> basic.disable())
 
             .authorizeHttpRequests(auth -> auth
 
-                // ✅ AUTH APIs (login, register)
+                // ✅ AUTH APIs
                 .requestMatchers("/auth/**").permitAll()
 
                 // ✅ SWAGGER APIs
@@ -115,7 +125,7 @@ public class SecurityConfig {
                         "/webjars/**"
                 ).permitAll()
 
-                // 🔒 Everything else needs authentication
+                // 🔒 Everything else secured
                 .anyRequest().authenticated()
             );
 
