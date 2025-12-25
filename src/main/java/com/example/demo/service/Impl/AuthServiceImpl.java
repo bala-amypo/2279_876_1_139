@@ -40,29 +40,40 @@
 
 
 
+
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.AuthResponse;
 import com.example.demo.dto.RegisterRequest;
 import com.example.demo.dto.RegisterResponse;
-import com.example.demo.security.JwtUtil;
+import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.AuthService;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private final JwtUtil jwtUtil;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthServiceImpl(JwtUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
+    public AuthServiceImpl(JwtTokenProvider jwtTokenProvider) {
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
     public AuthResponse login(AuthRequest request) {
 
-        String token = jwtUtil.generateToken(request.getEmail());
+        // TEMP values (later DB-la irundhu varum)
+        Long userId = 1L;
+        Set<String> roles = Set.of("USER");
+
+        String token = jwtTokenProvider.createToken(
+                userId,
+                request.getEmail(),
+                roles
+        );
 
         AuthResponse response = new AuthResponse();
         response.setToken(token);
