@@ -100,7 +100,7 @@ import java.util.Set;
 @Component
 public class JwtTokenProvider {
 
-    // 🔥 FIXED SECRET (must be same across restarts)
+    // fixed secret (same across restarts)
     private static final String SECRET_KEY =
             "mysecretkeymysecretkeymysecretkey123";
 
@@ -143,9 +143,14 @@ public class JwtTokenProvider {
         }
     }
 
-    // ---------- USED BY FILTER ----------
+    // ---------- CLAIM READERS ----------
     public String getUsernameFromToken(String token) {
-        return getClaims(token).getSubject(); // email
+        return getClaims(token).getSubject();
+    }
+
+    // 🔥 REQUIRED FOR TESTS (FullProjectTest.java)
+    public String getEmail(String token) {
+        return getClaims(token).getSubject();
     }
 
     public Long getUserId(String token) {
