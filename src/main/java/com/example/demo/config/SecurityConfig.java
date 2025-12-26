@@ -94,10 +94,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            // Disable CSRF (JWT REST API)
+            // 🚫 Disable CSRF completely (JWT / REST)
             .csrf(csrf -> csrf.disable())
 
-            // Disable default login mechanisms
+            // 🚫 Disable default login mechanisms
             .formLogin(form -> form.disable())
             .httpBasic(basic -> basic.disable())
 
@@ -117,9 +117,6 @@ public class SecurityConfig {
                         "/swagger-resources/**",
                         "/webjars/**"
                 ).permitAll()
-
-                // ✅ USER can access ALL APIs
-                .requestMatchers("/api/**").hasRole("USER")
 
                 // 🔒 Everything else
                 .anyRequest().authenticated()
