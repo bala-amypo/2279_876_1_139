@@ -11,3 +11,4 @@ public interface ProgramRepository extends JpaRepository<Program, Long> {
 
     boolean existsByUniversityIdAndNameIgnoreCase(Long universityId, String name);
 }
+
