@@ -22,7 +22,7 @@ public class OpenApiConfig {
                         .title("University Course Transfer Validator API")
                         .version("1.0"))
                 .servers(List.of(
-                        new Server().url("https://9118.32procr.amypo.ai/")
+                        new Server().url("https://9168.32procr.amypo.ai/")
                 ))
                 .addSecurityItem(
                         new SecurityRequirement().addList("bearerAuth")
