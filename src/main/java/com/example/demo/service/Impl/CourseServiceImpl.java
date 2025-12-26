@@ -6,16 +6,25 @@ import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.UniversityRepository;
 import com.example.demo.service.CourseService;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 @Service
 public class CourseServiceImpl implements CourseService {
 
+    @Autowired
     CourseRepository repo;
+
+    @Autowired
     UniversityRepository univRepo;
+
+    public CourseServiceImpl() {
+    }
 
     @Override
     public Course createCourse(Course course) {
+
         if (course.getCreditHours() == null || course.getCreditHours() <= 0) {
             throw new IllegalArgumentException("Credit hours must be > 0");
         }
@@ -26,6 +35,7 @@ public class CourseServiceImpl implements CourseService {
         repo.findByUniversityIdAndCourseCode(u.getId(), course.getCourseCode())
                 .ifPresent(c -> { throw new IllegalArgumentException("Duplicate course"); });
 
+        course.setUniversity(u);
         return repo.save(course);
     }
 

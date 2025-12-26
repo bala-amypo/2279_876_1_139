@@ -8,18 +8,20 @@ import com.example.demo.repository.ProgramRepository;
 import com.example.demo.repository.UniversityRepository;
 import com.example.demo.service.ProgramService;
 import org.springframework.stereotype.Service;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 @Service
 public class ProgramServiceImpl implements ProgramService {
 
-    private final ProgramRepository programRepository;
-    private final UniversityRepository universityRepository;
+    @Autowired
+    ProgramRepository programRepository;
 
-    public ProgramServiceImpl(ProgramRepository programRepository,UniversityRepository universityRepository) {
-        this.programRepository = programRepository;
-        this.universityRepository = universityRepository;
+    @Autowired
+    UniversityRepository universityRepository;
+
+    public ProgramServiceImpl() {
     }
 
     @Override
@@ -27,11 +29,11 @@ public class ProgramServiceImpl implements ProgramService {
 
         Long universityId = program.getUniversity().getId();
 
-        University university = universityRepository.findById(universityId).orElseThrow(()->new ResourceNotFoundException("University not found"));
+        University university = universityRepository.findById(universityId)
+                .orElseThrow(() -> new ResourceNotFoundException("University not found"));
 
         if (programRepository.existsByUniversityIdAndNameIgnoreCase(
                 universityId, program.getName())) {
-
             throw new ValidationException("Program already exists for this university");
         }
 
@@ -51,7 +53,7 @@ public class ProgramServiceImpl implements ProgramService {
 
     @Override
     public Program getProgramById(Long id) {
-
-        return programRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Program not found"));
+        return programRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Program not found"));
     }
 }

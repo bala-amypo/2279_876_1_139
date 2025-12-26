@@ -5,29 +5,40 @@ import com.example.demo.repository.TransferRuleRepository;
 import com.example.demo.repository.UniversityRepository;
 import com.example.demo.service.TransferRuleService;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 @Service
 public class TransferRuleServiceImpl implements TransferRuleService {
 
+    @Autowired
     TransferRuleRepository repo;
+
+    @Autowired
     UniversityRepository univRepo;
+
+    public TransferRuleServiceImpl() {
+    }
 
     @Override
     public TransferRule createRule(TransferRule rule) {
+
         if (rule.getMinimumOverlapPercentage() == null ||
                 rule.getMinimumOverlapPercentage() < 0 ||
                 rule.getMinimumOverlapPercentage() > 100) {
             throw new IllegalArgumentException("Overlap must be 0-100");
         }
+
         if (rule.getCreditHourTolerance() != null && rule.getCreditHourTolerance() < 0) {
             throw new IllegalArgumentException("Credit tolerance must be >= 0");
         }
 
         univRepo.findById(rule.getSourceUniversity().getId())
-                .orElseThrow(() -> new RuntimeException("Source not found"));
+                .orElseThrow(() -> new RuntimeException("Source university not found"));
+
         univRepo.findById(rule.getTargetUniversity().getId())
-                .orElseThrow(() -> new RuntimeException("Target not found"));
+                .orElseThrow(() -> new RuntimeException("Target university not found"));
 
         return repo.save(rule);
     }

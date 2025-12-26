@@ -6,25 +6,38 @@ import com.example.demo.repository.CourseContentTopicRepository;
 import com.example.demo.repository.CourseRepository;
 import com.example.demo.service.CourseContentTopicService;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 @Service
 public class CourseContentTopicServiceImpl implements CourseContentTopicService {
 
+    @Autowired
     CourseContentTopicRepository repo;
+
+    @Autowired
     CourseRepository courseRepo;
+
+    public CourseContentTopicServiceImpl() {
+    }
 
     @Override
     public CourseContentTopic createTopic(CourseContentTopic topic) {
+
         if (topic.getTopicName() == null || topic.getTopicName().isBlank()) {
             throw new IllegalArgumentException("Topic name required");
         }
+
         if (topic.getWeightPercentage() != null &&
                 (topic.getWeightPercentage() < 0 || topic.getWeightPercentage() > 100)) {
             throw new IllegalArgumentException("Weight must be 0-100");
         }
+
         Course c = courseRepo.findById(topic.getCourse().getId())
                 .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        topic.setCourse(c);
         return repo.save(topic);
     }
 
