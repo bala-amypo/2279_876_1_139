@@ -1,4 +1,4 @@
-// // package com.example.demo.security; //real code
+// // package com.example.demo.security;
 
 // // import io.jsonwebtoken.Claims;
 // // import io.jsonwebtoken.Jwts;
@@ -177,15 +177,13 @@
 //                 .getBody();
 //     }
 // }
+package com.example.demo.security;
 
-package com.example.demo.security;   //recent
-
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -193,18 +191,10 @@ import java.util.Set;
 @Component
 public class JwtTokenProvider {
 
-    // ✅ 256-bit Base64 encoded secret key
-    private static final String SECRET_KEY =
-            "ZGVtby1qc3R3LXNlY3VyZS1rZXktMjU2LWJpdHMtbG9uZw==";
+    private final String SECRET_KEY = "my-secret-key"; 
+    private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
 
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
-
-    private Key getSigningKey() {
-        byte[] keyBytes = Base64.getDecoder().decode(SECRET_KEY);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
-
-    // ✅ CREATE TOKEN
+    // ✅ CREATE TOKEN (FIXES COMPILATION ERROR)
     public String createToken(Long userId, String email, Set<String> roles) {
 
         Claims claims = Jwts.claims().setSubject(email);
@@ -215,7 +205,7 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
@@ -224,16 +214,15 @@ public class JwtTokenProvider {
         try {
             getClaims(token);
             return true;
-        } catch (JwtException | IllegalArgumentException e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
-    // ✅ PARSE CLAIMS
+    // ✅ GET CLAIMS
     public Claims getClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
+        return Jwts.parser()
+                .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody();
     }

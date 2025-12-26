@@ -34,4 +34,4 @@ public class CourseContentTopicController {
     public List<CourseContentTopic> getTopicsForCourse(@PathVariable Long courseId) {
         return service.getTopicsForCourse(courseId);
     }
-}
+} 
