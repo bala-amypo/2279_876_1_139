@@ -15,7 +15,7 @@ public class RegisterResponse {
         this.role = role;
     }
 
-    // getters & setters
+   
     public String getMessage() {
         return message;
     }
