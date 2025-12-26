@@ -130,7 +130,7 @@
 // }
 
 
-package com.example.demo.config; //recent 
+package com.example.demo.config; //recent friday
 
 import com.example.demo.security.JwtAuthenticationFilter;
 import com.example.demo.security.JwtTokenProvider;
