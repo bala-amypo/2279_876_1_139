@@ -43,6 +43,7 @@ public class CourseController {
         service.deactivateCourse(id);
     }
 }
+
 // package com.example.demo.controller;
 
 // import com.example.demo.entity.Course;
