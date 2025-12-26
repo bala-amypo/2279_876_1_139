@@ -1,40 +1,139 @@
-// package com.example.demo.config;
+package com.example.demo.config;
 
-// import com.example.demo.security.JwtAuthenticationFilter;
-// import com.example.demo.security.JwtTokenProvider;
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Configuration;
-// import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-// import org.springframework.security.web.SecurityFilterChain;
-// import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import com.example.demo.security.JwtAuthenticationFilter;
+import com.example.demo.security.JwtTokenProvider;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-// @Configuration
-// public class SecurityConfig {
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
 
-//     @Bean
-//     public SecurityFilterChain securityFilterChain(
-//             HttpSecurity http,
-//             JwtTokenProvider jwtTokenProvider
-//     ) throws Exception {
+    private final JwtTokenProvider jwtTokenProvider;
 
-//         http
-//             .csrf(csrf -> csrf.disable())
-//             .authorizeHttpRequests(auth -> auth
-//                 .requestMatchers(
-//                         "/auth/**",
-//                         "/swagger-ui/**",
-//                         "/v3/api-docs/**"
-//                 ).permitAll()
-//                 .anyRequest().authenticated()
-//             )
-//             .addFilterBefore(
-//                 new JwtAuthenticationFilter(jwtTokenProvider),
-//                 UsernamePasswordAuthenticationFilter.class
-//             );
+    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
 
-//         return http.build();
-//     }
-// }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http
+            .csrf(csrf -> csrf.disable())
+
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                        "/auth/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/v3/api-docs/**"
+                ).permitAll()
+                .requestMatchers("/api/**").authenticated()
+                .anyRequest().authenticated()
+            )
+
+            .addFilterBefore(
+                new JwtAuthenticationFilter(jwtTokenProvider),
+                UsernamePasswordAuthenticationFilter.class
+            );
+
+        return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+}
+
+
+// // package com.example.demo.config;
+
+// // import com.example.demo.security.JwtAuthenticationFilter;
+// // import com.example.demo.security.JwtTokenProvider;
+// // import org.springframework.context.annotation.Bean;
+// // import org.springframework.context.annotation.Configuration;
+// // import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+// // import org.springframework.security.web.SecurityFilterChain;
+// // import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+// // @Configuration
+// // public class SecurityConfig {
+
+// //     @Bean
+// //     public SecurityFilterChain securityFilterChain(
+// //             HttpSecurity http,
+// //             JwtTokenProvider jwtTokenProvider
+// //     ) throws Exception {
+
+// //         http
+// //             .csrf(csrf -> csrf.disable())
+// //             .authorizeHttpRequests(auth -> auth
+// //                 .requestMatchers(
+// //                         "/auth/**",
+// //                         "/swagger-ui/**",
+// //                         "/v3/api-docs/**"
+// //                 ).permitAll()
+// //                 .anyRequest().authenticated()
+// //             )
+// //             .addFilterBefore(
+// //                 new JwtAuthenticationFilter(jwtTokenProvider),
+// //                 UsernamePasswordAuthenticationFilter.class
+// //             );
+
+// //         return http.build();
+// //     }
+// // }
+
+
+// // package com.example.demo.config;
+
+// // import org.springframework.context.annotation.Bean;
+// // import org.springframework.context.annotation.Configuration;
+// // import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+// // import org.springframework.security.web.SecurityFilterChain;
+
+// // @Configuration
+// // public class SecurityConfig {
+
+// //     @Bean
+// //     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+// //         http
+// //             .csrf(csrf -> csrf.disable())
+// //             .authorizeHttpRequests(auth -> auth
+
+// //                 // ✅ ALLOW SWAGGER
+// //                 .requestMatchers(
+// //                         "/swagger-ui.html",
+// //                         "/swagger-ui/**",
+// //                         "/v3/api-docs/**",
+// //                         "/v3/api-docs",
+// //                         "/swagger-resources/**",
+// //                         "/webjars/**"
+// //                 ).permitAll()
+
+// //                 // auth controller allowed
+// //                 .requestMatchers("/auth/**").permitAll()
+
+// //                 // everything else secured
+// //                 .anyRequest().authenticated()
+// //             );
+
+// //         return http.build();
+// //     }
+// // }
+
+
+
+
 
 
 // package com.example.demo.config;
@@ -51,77 +150,34 @@
 //     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 //         http
+//             // 🚫 Disable CSRF completely (JWT / REST)
 //             .csrf(csrf -> csrf.disable())
+
+//             // 🚫 Disable default login mechanisms
+//             .formLogin(form -> form.disable())
+//             .httpBasic(basic -> basic.disable())
+
 //             .authorizeHttpRequests(auth -> auth
 
-//                 // ✅ ALLOW SWAGGER
+//                 // 🔓 ROOT
+//                 .requestMatchers("/").permitAll()
+
+//                 // 🔓 AUTH APIs
+//                 .requestMatchers("/auth/**").permitAll()
+
+//                 // 🔓 SWAGGER
 //                 .requestMatchers(
 //                         "/swagger-ui.html",
 //                         "/swagger-ui/**",
 //                         "/v3/api-docs/**",
-//                         "/v3/api-docs",
 //                         "/swagger-resources/**",
 //                         "/webjars/**"
 //                 ).permitAll()
 
-//                 // auth controller allowed
-//                 .requestMatchers("/auth/**").permitAll()
-
-//                 // everything else secured
+//                 // 🔒 Everything else
 //                 .anyRequest().authenticated()
 //             );
 
 //         return http.build();
 //     }
 // }
-
-
-
-
-
-
-package com.example.demo.config;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-
-@Configuration
-public class SecurityConfig {
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        http
-            // 🚫 Disable CSRF completely (JWT / REST)
-            .csrf(csrf -> csrf.disable())
-
-            // 🚫 Disable default login mechanisms
-            .formLogin(form -> form.disable())
-            .httpBasic(basic -> basic.disable())
-
-            .authorizeHttpRequests(auth -> auth
-
-                // 🔓 ROOT
-                .requestMatchers("/").permitAll()
-
-                // 🔓 AUTH APIs
-                .requestMatchers("/auth/**").permitAll()
-
-                // 🔓 SWAGGER
-                .requestMatchers(
-                        "/swagger-ui.html",
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**",
-                        "/swagger-resources/**",
-                        "/webjars/**"
-                ).permitAll()
-
-                // 🔒 Everything else
-                .anyRequest().authenticated()
-            );
-
-        return http.build();
-    }
-}

@@ -22,7 +22,7 @@ public class OpenApiConfig {
                         .title("University Course Transfer Validator API")
                         .version("1.0"))
                 .servers(List.of(
-                        new Server().url("https://9168.32procr.amypo.ai/")
+                        new Server().url("https://9118.32procr.amypo.ai/")
                 ))
                 .addSecurityItem(
                         new SecurityRequirement().addList("bearerAuth")
@@ -38,14 +38,14 @@ public class OpenApiConfig {
                 );
     }
 }
-// package com.example.demo.config; //Authorization
+// package com.example.demo.config;
 
 // import io.swagger.v3.oas.models.OpenAPI;
 // import io.swagger.v3.oas.models.Components;
 // import io.swagger.v3.oas.models.info.Info;
+// import io.swagger.v3.oas.models.security.SecurityRequirement;
 // import io.swagger.v3.oas.models.security.SecurityScheme;
 // import io.swagger.v3.oas.models.servers.Server;
-
 // import org.springframework.context.annotation.Bean;
 // import org.springframework.context.annotation.Configuration;
 
@@ -60,15 +60,17 @@ public class OpenApiConfig {
 //         return new OpenAPI()
 //                 .info(new Info()
 //                         .title("University Course Transfer Validator API")
-//                         .version("1.0")
-//                         .description("JWT secured API with Swagger authorization"))
+//                         .version("1.0"))
 //                 .servers(List.of(
 //                         new Server().url("https://9168.32procr.amypo.ai/")
 //                 ))
-//                 .components(new Components()
-//                         .addSecuritySchemes("bearerAuth",
+//                 .addSecurityItem(
+//                         new SecurityRequirement().addList("bearerAuth")
+//                 )
+//                 .components(
+//                         new Components().addSecuritySchemes(
+//                                 "bearerAuth",
 //                                 new SecurityScheme()
-//                                         .name("Authorization")
 //                                         .type(SecurityScheme.Type.HTTP)
 //                                         .scheme("bearer")
 //                                         .bearerFormat("JWT")
@@ -76,3 +78,43 @@ public class OpenApiConfig {
 //                 );
 //     }
 // }
+// // package com.example.demo.config; //Authorization
+
+// // import io.swagger.v3.oas.models.OpenAPI;
+// // import io.swagger.v3.oas.models.Components;
+// // import io.swagger.v3.oas.models.info.Info;
+// // import io.swagger.v3.oas.models.security.SecurityScheme;
+// // import io.swagger.v3.oas.models.servers.Server;
+
+// // import org.springframework.context.annotation.Bean;
+// // import org.springframework.context.annotation.Configuration;
+
+// // import java.util.List;
+
+// // @Configuration
+// // public class OpenApiConfig {
+
+// //     @Bean
+// //     public OpenAPI customOpenAPI() {
+
+// //         return new OpenAPI()
+// //                 .info(new Info()
+// //                         .title("University Course Transfer Validator API")
+// //                         .version("1.0")
+// //                         .description("JWT secured API with Swagger authorization"))
+// //                 .servers(List.of(
+// //                         new Server().url("https://9168.32procr.amypo.ai/")
+// //                 ))
+// //                 .components(new Components()
+// //                         .addSecuritySchemes("bearerAuth",
+// //                                 new SecurityScheme()
+// //                                         .name("Authorization")
+// //                                         .type(SecurityScheme.Type.HTTP)
+// //                                         .scheme("bearer")
+// //                                         .bearerFormat("JWT")
+// //                         )
+// //                 );
+// //     }
+// // }
+
+
