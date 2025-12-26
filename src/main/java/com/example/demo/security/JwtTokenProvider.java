@@ -177,6 +177,7 @@
 //                 .getBody();
 //     }
 // }
+
 package com.example.demo.security;
 
 import io.jsonwebtoken.*;
@@ -192,10 +193,9 @@ import java.util.Set;
 @Component
 public class JwtTokenProvider {
 
-    // ⚠️ MUST be Base64 encoded
+    // ✅ 256-bit Base64 encoded secret key
     private static final String SECRET_KEY =
-            "bXktc2VjcmV0LWtleS1mb3Itand0LXNpZ25pbmc=";
-    // this is Base64 of: my-secret-key-for-jwt-signing
+            "ZGVtby1qc3R3LXNlY3VyZS1rZXktMjU2LWJpdHMtbG9uZw==";
 
     private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
 
@@ -229,7 +229,7 @@ public class JwtTokenProvider {
         }
     }
 
-    // ✅ PARSE CLAIMS (FIXES 500 ERROR)
+    // ✅ PARSE CLAIMS
     public Claims getClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
