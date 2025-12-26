@@ -1,4 +1,4 @@
-// // package com.example.demo.security;
+// // package com.example.demo.security; //real code
 
 // // import io.jsonwebtoken.Claims;
 // // import io.jsonwebtoken.Jwts;
@@ -178,7 +178,7 @@
 //     }
 // }
 
-package com.example.demo.security;
+package com.example.demo.security;   //recent
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
